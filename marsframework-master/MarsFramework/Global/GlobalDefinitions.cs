@@ -1,5 +1,6 @@
 ﻿using Excel;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace MarsFramework.Global
     class GlobalDefinitions
     {
         //Initialise the browser
-        public static IWebDriver driver { get; set; }
+        public static RemoteWebDriver driver { get; set; }
+
 
         #region WaitforElement 
 

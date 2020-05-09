@@ -10,109 +10,98 @@ using MarsFramework.Pages;
 using AutoItX3Lib;
 using System.Collections.Generic;
 using System;
-
+using OpenQA.Selenium.Remote;
+//https://www.youtube.com/watch?v=jgKgbVcQ-1U&feature=youtu.be for lambda expressions
 namespace Marsframework.Pages
 
 {
     internal class ShareSkill
     {
+        //Creating a constructor
+        private readonly RemoteWebDriver _driver;
         public ShareSkill()
         {
-            PageFactory.InitElements(GlobalDefinitions.driver, this);
+            _driver = GlobalDefinitions.driver;
         }
 
-
         //Click on ShareSkill Button
-        [FindsBy(How = How.XPath, Using = "//a[@class='ui basic green button']")]
-        private IWebElement ShareSkillButton { get; set; }
+        private IWebElement ShareSkillButton => _driver.FindElementByXPath("//a[@class='ui basic green button']");
+
+
 
         //Enter the Title in textbox
-        [FindsBy(How = How.XPath, Using = "//input[@name='title']")]
-        private IWebElement Title { get; set; }
+        private IWebElement Title => _driver.FindElementByXPath("//input[@name='title']");
+
 
         //Enter the Description in textbox
-        [FindsBy(How = How.XPath, Using = "//textarea[@name='description']")]
-        private IWebElement Description { get; set; }
+        private IWebElement Description => _driver.FindElementByXPath("//textarea[@name='description']");
+
 
         //Click on Category Dropdown // select the dropdown list
-        [FindsBy(How = How.XPath, Using = "//select[@name='categoryId']")]
-        private IWebElement CategoryDropDown { get; set; }
+        private IWebElement CategoryDropDown => _driver.FindElementByXPath("//select[@name='categoryId']");
+
 
         //Click on SubCategory Dropdown
-        [FindsBy(How = How.XPath, Using = "//select[@name='subcategoryId']")]
-        private IWebElement SubCategoryDropDown { get; set; }
+        private IWebElement SubCategoryDropDown => _driver.FindElementByXPath("//select[@name='subcategoryId']");
+
 
         //Enter Tag names in textbox
-        [FindsBy(How = How.XPath, Using = "(//input[@aria-label='Add new tag'])[1]")]
-        private IWebElement Tags { get; set; }
+        private IWebElement Tags => _driver.FindElementByXPath("(//input[@aria-label='Add new tag'])[1]");
+
 
         //Select the Service type (Hourly basis service)
-        [FindsBy(How = How.XPath, Using = "//input[@name='serviceType' and @value='0'] ")]
-        private IWebElement Hourlybasisservice { get; set; }
+        private IWebElement Hourlybasisservice => _driver.FindElementByXPath("//input[@name='serviceType' and @value='0']");
+
 
         //Select the Service type (One-off service)
-        [FindsBy(How = How.XPath, Using = "//input[@name='serviceType' and @value='1'] ")]
-        private IWebElement Oneoffservice { get; set; }
+        private IWebElement Oneoffservice => _driver.FindElementByXPath("//input[@name='serviceType' and @value='1']");
+
 
         //Select the Location Type
-        [FindsBy(How = How.XPath, Using = "//input[@name='locationType' and @value='0'] ")]
-        private IWebElement LocationTypeOptions { get; set; }
+        private IWebElement LocationTypeOptions => _driver.FindElementByXPath("//input[@name='locationType' and @value='0']");
+
 
         //Click on Start Date dropdown
-        [FindsBy(How = How.XPath, Using = "//input[@name='startDate'] ")]
-        private IWebElement StartDateDropDown { get; set; }
+        private IWebElement DateStartDropDown => _driver.FindElementByXPath("//input[@name='startDate']");
 
         //Click on End Date dropdown
-        [FindsBy(How = How.XPath, Using = "//input[@name='endDate']")]
-        private IWebElement EnddateDropDown { get; set; }
-
-        //Click on End Date dropdown
-        [FindsBy(How = How.XPath, Using = "//input[@name='endDate'] ")]
-        private IWebElement EndDateDropDown { get; set; }
+        private IWebElement EnddateDropDown => _driver.FindElementByXPath("//input[@name='endDate']");
 
         //Storing the table of available days
-        [FindsBy(How = How.XPath, Using = "//div[@class='ui checkbox'] /input[@index='1']")]
-        private IWebElement Days { get; set; }
+        private IWebElement Days => _driver.FindElementByXPath("//div[@class='ui checkbox'] /input[@index='1']");
 
-       //Click on Startdate dropdown
-        [FindsBy(How = How.XPath, Using = "//input[@name='startDate']")]
-        private IWebElement StartdateDropDown { get; set; }
 
         //Click on StartTime dropdown
-        [FindsBy(How = How.XPath, Using = "//input[@name='StartTime' and @index='1']")]
-        private IWebElement StartTimeDropDown { get; set; }
-
+        private IWebElement StartTimeDropDown => _driver.FindElementByXPath("//input[@name='StartTime' and @index='1']");
+     
         //Click on EndTime dropdown
-        [FindsBy(How = How.XPath, Using = "//input[@name='EndTime' and @index='1']")]
-        private IWebElement EndTimeDropDown { get; set; }
+        private IWebElement EndTimeDropDown => _driver.FindElementByXPath("//input[@name='EndTime' and @index='1']");
+        
 
         //Click on Skill Trade option
-        [FindsBy(How = How.XPath, Using = "//input[@name='skillTrades' and  @value='true'] ")]
-        private IWebElement SkillTradeOption { get; set; }
-
+        private IWebElement SkillTradeOption => _driver.FindElementByXPath("//input[@name='skillTrades' and  @value='true']");
+        
         //Click On Skill-Exchange option
-        [FindsBy(How = How.XPath, Using = "//div[@class='form-wrapper'] //input[@aria-label='Add new tag']")]
-        private IWebElement SkillExchangeOption { get; set; }
+        private IWebElement SkillExchangeOption => _driver.FindElementByXPath("//div[@class='form-wrapper'] //input[@aria-label='Add new tag']");
+       
 
         //Enter the amount for Credit
-        [FindsBy(How = How.XPath, Using = "//input[@name='charge'] ")]
-        private IWebElement CreditAmount { get; set; }
+        private IWebElement CreditAmount => _driver.FindElementByXPath("//input[@name='charge']");
+        
 
         //Click on Active/Hidden option
-        [FindsBy(How = How.XPath, Using = "//input[@name='isActive' and @value='true'] ")]
-        private IWebElement ActiveOption { get; set; }
-
+        private IWebElement ActiveOption => _driver.FindElementByXPath("//input[@name='isActive' and @value='true']");
+  
         //Click on Save button
-        [FindsBy(How = How.XPath, Using = "//input[@value='Save'] ")]
-        private IWebElement Save { get; set; }
+        private IWebElement Save => _driver.FindElementByXPath("//input[@value='Save']");
+        
 
         //Click on Cancel button
-        [FindsBy(How = How.XPath, Using = "//input[@value='Cancel'] ")]
-        private IWebElement Cancel { get; set; }
-
+        private IWebElement Cancel => _driver.FindElementByXPath("//input[@value='Cancel']");
+       
         //Click on WorkSample Upload button
-        [FindsBy(How = How.XPath, Using = "//i[@class='huge plus circle icon padding-25']")]
-        private IWebElement WorkSampleUploadButton { get; set; }
+        private IWebElement WorkSampleUploadButton => _driver.FindElementByXPath("//i[@class='huge plus circle icon padding-25']");
+       
 
         /*internal void EnterShareSkill()
         {
@@ -168,7 +157,7 @@ namespace Marsframework.Pages
                 Base.test.Log(LogStatus.Info, "search skills - Test Failed ", e.Message);
 
             }
-
+            
             //Write Log reports 
             Base.test.Log(LogStatus.Info, "Clicked ShareSkill Button");
         }
@@ -182,6 +171,9 @@ namespace Marsframework.Pages
             GlobalDefinitions.wait(5000);
             Title.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Title"));
 
+            //Write in console
+            Console.WriteLine("Entered Title");
+
             //Write log reports
             Base.test.Log(LogStatus.Info, "Entered Title");
         }
@@ -191,6 +183,9 @@ namespace Marsframework.Pages
         {
             // Enter the Description in textbox
             Description.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Description"));
+
+            //Write in console
+            Console.WriteLine("Entered description");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "Entered Description");
@@ -216,6 +211,9 @@ namespace Marsframework.Pages
                 }
             }
 
+            //Write in console
+            Console.WriteLine("selected catagory dropdown");
+
             //Write log reports
             Base.test.Log(LogStatus.Info, "Selected Catagory Dropdown");
         }
@@ -239,6 +237,9 @@ namespace Marsframework.Pages
                 }
             }
 
+            //Write in console
+            Console.WriteLine("selected subcatagory dropdown");
+
             //Write log reports
             Base.test.Log(LogStatus.Info, "Entered Sub Catagory Dropdown");
         }
@@ -259,6 +260,8 @@ namespace Marsframework.Pages
                 }
 
             }
+            //Write in console
+            Console.WriteLine("Entered tags");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "Entered All the tags");
@@ -268,18 +271,20 @@ namespace Marsframework.Pages
         internal void SelectServiceTypeOptions()
         {
             //Select the Service type
+            //Hourlybasisservice.Click();
 
-            // ServiceTypeOptions.Click();
+           //Using if condition to take service type data from excel file
+             if (GlobalDefinitions.driver.FindElement(By.XPath("//input[@name='locationType' and @value='0']")).Text.Equals(GlobalDefinitions.ExcelLib.ReadData(2, "Service Type")))
+                 {
+                     Hourlybasisservice.Click();
+                 }
+                else
+                 {
+                     Oneoffservice.Click();
+                 }
 
-            //Using if condition to take service type data from excel file
-            if (GlobalDefinitions.driver.FindElement(By.XPath("//input[@name='locationType' and @value='0']")).Text.Equals(GlobalDefinitions.ExcelLib.ReadData(2, "Service Type")))
-                {
-                    Hourlybasisservice.Click();
-                }
-               else
-                {
-                    Oneoffservice.Click();
-                }
+            //Write in console
+            Console.WriteLine("selected service type");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "Selected Service Type");
@@ -293,6 +298,9 @@ namespace Marsframework.Pages
             ////Select the Location type
             LocationTypeOptions.Click();
 
+            //Write in console
+            Console.WriteLine("selected location type");
+
             //Write log reports
             Base.test.Log(LogStatus.Info, "Selected LOcation Type");
         }
@@ -300,8 +308,13 @@ namespace Marsframework.Pages
 
         internal void SelectStartDateDropDown()
         {
+
             //Find the date time picker control and Fill date as dd/mm/yyyy as 30/03/2020
-            StartdateDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Start date"));
+            DateStartDropDown.SendKeys("30302050");
+            //DateStartDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(3, "Startdate"));
+
+            //Write in console
+            Console.WriteLine("Entered startdate");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "Entered Startdate");
@@ -311,7 +324,11 @@ namespace Marsframework.Pages
         internal void SelectEndDateDropDown()
         {
             //Find the date time picker control and Fill date as dd/mm/yyyy as 30/03/2050
-            EnddateDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "End date"));
+            EnddateDropDown.SendKeys("30032060");
+            //EnddateDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(3, "Enddate"));
+
+            //Write in console
+            Console.WriteLine("Entered enddate");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "Entered Enddate");
@@ -322,6 +339,9 @@ namespace Marsframework.Pages
             //Click On available days
             Days.Click();
 
+            //Write in console
+            Console.WriteLine("selected available days");
+
             //Write log reports
             Base.test.Log(LogStatus.Info, "Selected Available days");
         }
@@ -330,6 +350,9 @@ namespace Marsframework.Pages
         {
             //Click on StartTime dropdown
             StartTimeDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "StartTime"));
+
+            //Write in console
+            Console.WriteLine("Entered starttime");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "Entered StartTime");
@@ -342,6 +365,9 @@ namespace Marsframework.Pages
             // Click On EndTime Dropdown
             EndTimeDropDown.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "EndTime"));
 
+            //Write in console
+            Console.WriteLine("Entered endtime");
+
             //Write log reports
             Base.test.Log(LogStatus.Info, "Entered EndTime");
         }
@@ -350,6 +376,9 @@ namespace Marsframework.Pages
         {
             //Click on Skill Trade option
             SkillTradeOption.Click();
+
+            //Write in console
+            Console.WriteLine("selected skilltrade option");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "Selected SkillTrade Option");
@@ -368,6 +397,9 @@ namespace Marsframework.Pages
             //Pressing the enter key 
             SkillExchangeOption.SendKeys(Keys.Enter);
 
+            //Write in console
+            Console.WriteLine("Selected skill exchange option");
+
             //Write log reports
             Base.test.Log(LogStatus.Info, "Selected Skill Exchange Option");
 
@@ -377,6 +409,9 @@ namespace Marsframework.Pages
         {
             //Click on Active/Hidden option
             ActiveOption.Click();
+
+            //Write in console
+            Console.WriteLine("checked active option");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "Checked Active Option");
@@ -399,16 +434,19 @@ namespace Marsframework.Pages
 
             //defining driver wait
             GlobalDefinitions.wait(2000);
+            Thread.Sleep(2000);
 
             // To Select file from a window 
             autoIt.Send(@"F:\Tasks\fileuploadsample.txt");
 
             //defining driver wait
             GlobalDefinitions.wait(2000);
-
+            
             // To press open button -- so the file will get uploaded
             autoIt.Send("{ENTER}");
 
+            //Write in console
+            Console.WriteLine("work sample file uploaded");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "WorkSample File Uploaded");
@@ -420,6 +458,9 @@ namespace Marsframework.Pages
         {
             // Click On Save Button
             Save.Click();
+
+            //Write in console
+            Console.WriteLine("Clicked save");
 
             //Write log reports
             Base.test.Log(LogStatus.Info, "Clicked Save");

@@ -6,60 +6,44 @@ using RelevantCodes.ExtentReports;
 
 namespace MarsFramework.Pages
 {
-    class ManageListings
+    internal class ManageListings
     {
-        /*
-        public ManageListings()
-        {
-            PageFactory.InitElements(Global.GlobalDefinitions.driver, this);
-        }*/
-
-        private readonly RemoteWebDriver _driver;
 
         //Creating a constructor
-        public ManageListings(RemoteWebDriver driver) => _driver = driver;
-
+        private readonly RemoteWebDriver _driver;
+        public ManageListings()
+        {
+            _driver = GlobalDefinitions.driver;
+        }
 
         //Click on Manage Listings Link
-        IWebElement manageListingsLink => _driver.FindElementByLinkText("Manage Listings");
-
-     
-
-        //View the listing
-        IWebElement view => _driver.FindElementByXPath("//i[@class='eye icon'])[1]");
+        private IWebElement manageListingsLink => _driver.FindElementByLinkText("Manage Listings");
+        
 
 
         //Delete the listing
-        IWebElement delete => _driver.FindElementByXPath("//table[1]/tbody[1]");
-
-
+        private IWebElement delete => _driver.FindElementByXPath("(//i[@class='remove icon'])[1]");
+       
         //Edit the listing
-        IWebElement edit => _driver.FindElement(By.XPath("//i[@class='outline write icon'])[1]"));
-}
-
-       //Click on Yes - for delete
-      
-
-       IWebElement YesButton => _driver.FindElement(By.XPath("//button[contains(.,'Yes')]"));
-
-
-    //Click on No - for not deleting 
-    [FindsBy(How = How.XPath, Using = "//button[contains(.,'No')]")]
-        private IWebElement clickNoButton { get; set; }
+        private IWebElement edit => _driver.FindElementByXPath("(//i[@class='outline write icon'])[1]");
+        
+        //Click on Yes - for delete
+        private IWebElement clickYesButton => _driver.FindElementByXPath("//button[contains(.,'Yes')]");
+        
+        //Click on No - for not deleting 
+        private IWebElement clickNoButton => _driver.FindElementByXPath("//button[contains(.,'No')]");
+       
+        //Click on ShareSkill Button [ under shareskill button]
+        private IWebElement ShareSkillButton => _driver.FindElementByXPath("//a[@class='ui basic green button']");
         
 
-        //Click on ShareSkill Button [ under shareskill button]
-        [FindsBy(How = How.XPath, Using = "//a[@class='ui basic green button']")]
-        private IWebElement ShareSkillButton { get; set; }
-
-
         //Enter the Title in textbox [ under shareskill button]
-        [FindsBy(How = How.XPath, Using = "//input[@name='title']")]
-        private IWebElement Title { get; set; }
+        private IWebElement Title => _driver.FindElementByXPath("//input[@name='title']");
+       
 
         //Click on Save button [ under shareskill button]
-        [FindsBy(How = How.XPath, Using = "//input[@value='Save'] ")]
-        private IWebElement Save { get; set; }
+        private IWebElement Save => _driver.FindElementByXPath("//input[@value='Save']");
+       
 
         internal void Listings()
         {
@@ -68,29 +52,13 @@ namespace MarsFramework.Pages
 
         }
 
-        public void ClickOnShareSkillButton()
-        {
-            // Because of application problem we need to click Skill button first, then ManageListings Link
-            //Click on ShareSkill Button
-           
-            //defining driver wait
-            GlobalDefinitions.wait(5000);
-
-            //Click on Shareskill button
-            ShareSkillButton.Click();
-
-            //Write Log reports
-            Base.test.Log(LogStatus.Info, "Clicked Shareskill Button");
-
-        }
-
+        
         internal void ClickOnmanageListingsLink()
         {
             //defining driver wait
             GlobalDefinitions.wait(5000);
 
             //Click on manageListingsLink
-           
             manageListingsLink.Click();
 
             //Write Log reports
@@ -98,36 +66,14 @@ namespace MarsFramework.Pages
 
         }
 
-        internal void ClickView()
-        {
-            ////View the listing
-            view.Click();
-
-            //Write Log reports
-            Base.test.Log(LogStatus.Info, "Clicked Save Button");
-        }
-
-        internal void Clickedit()
-        {
-            //Edit the listing
-            edit.Click();
-
-            //Clear the title textbox
-            Title.Clear();
-
-            //Title.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2,"Title"));
-            Title.SendKeys("Selenium");
-
-            //Click on Save button
-            Save.Click();
-
-            //Write Log reports
-            Base.test.Log(LogStatus.Info, "Clicked Edit Button");
-
-        }
+        
 
         internal void Clickdelete()
         {
+            delete.Click();
+
+            //Populate the Excel Sheet
+            GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath, "ManageListings");
 
             if (GlobalDefinitions.ExcelLib.ReadData(2, "DeleteAction").Equals("Yes"))
             {
@@ -146,7 +92,20 @@ namespace MarsFramework.Pages
                 Base.test.Log(LogStatus.Info, "Clicked on NO  button for delete");
             }
 
+
+
         }
+
+        internal void Clickedit()
+        {
+            //Edit the listing
+            edit.Click();
+
+            //Write Log reports
+            Base.test.Log(LogStatus.Info, "Clicked Edit Button");
+
+        }
+
 
     }
 }

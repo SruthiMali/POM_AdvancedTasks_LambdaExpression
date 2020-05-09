@@ -1,6 +1,7 @@
 ﻿using MarsFramework.Global;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
 using RelevantCodes.ExtentReports;
 using System;
@@ -13,22 +14,25 @@ namespace MarsFramework.Pages
 {
    internal class SearchSkills
     {
+
+        //Creating a constructor
+        private readonly RemoteWebDriver _driver;
         public SearchSkills()
         {
-            PageFactory.InitElements(GlobalDefinitions.driver, this);
+            _driver = GlobalDefinitions.driver;
         }
 
         //Click on SearchSkillIcon
-        [FindsBy(How = How.XPath, Using = "//i[@class='search link icon']")]
-        private IWebElement searchSkillIcon { get; set; }
+        private IWebElement searchSkillIcon => _driver.FindElementByXPath("//i[@class='search link icon']");
+       
 
         //Click on Programming & Tech Catagory
-        [FindsBy(How = How.XPath, Using = "//a[@role='listitem'][contains(.,'Programming & Tech')]")]
-        private IWebElement programmingTechCatagory { get; set; }
+        private IWebElement programmingTechCatagory => _driver.FindElementByXPath("//a[@role='listitem'][contains(.,'Programming & Tech')]");
+        
 
         //Click on QA SubCatagory Under Programming & Tech Catagory
-        [FindsBy(How = How.XPath, Using = "//a[@role='listitem'][contains(.,'QA')]")]
-        private IWebElement QASubCatagory { get; set; }
+        private IWebElement QASubCatagory => _driver.FindElementByXPath("//a[@role='listitem'][contains(.,'QA')]");
+       
 
         internal void ClickOnSearchSkills()
         {

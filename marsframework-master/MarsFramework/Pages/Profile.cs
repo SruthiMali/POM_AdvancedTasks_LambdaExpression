@@ -2,74 +2,83 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
 using RelevantCodes.ExtentReports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+
+//https://www.youtube.com/watch?v=jgKgbVcQ-1U&feature=youtu.be for lambda expressions
 
 namespace MarsFramework.Pages
 {
     class Profile
     {
+        //Creating a constructor
+        private readonly RemoteWebDriver _driver;
         public Profile()
         {
-            PageFactory.InitElements(Global.GlobalDefinitions.driver, this);
+            _driver = GlobalDefinitions.driver;
         }
 
+
         //Click Desctiption Icon 
-        [FindsBy(How = How.XPath, Using = "//h3[contains(.,'Description')]/span")]
-        private IWebElement Description { get; set; }
+        private IWebElement Description => _driver.FindElementByXPath("//h3[contains(.,'Description')]/span");
+
 
         //Enter Description 
-        [FindsBy(How = How.XPath, Using = "//textarea[@maxlength='600']")]
-        private IWebElement EnterDescription { get; set; }
+        private IWebElement EnterDescription => _driver.FindElementByXPath("//textarea[@maxlength='600']");
+
 
         //Click on Save Button to save description
-        [FindsBy(How = How.XPath, Using = "//button[@type='button']")]
-        private IWebElement DescriptionSave { get; set; }
+        private IWebElement DescriptionSave => _driver.FindElementByXPath("//button[@type='button']");
+
 
         //Click on username/Hi Sruthi
-        [FindsBy(How = How.XPath, Using = "//span[contains(.,'Hi Sruthi')]")]
-        private IWebElement Username { get; set; }
+        private IWebElement Username => _driver.FindElementByXPath("//span[contains(.,'Hi Sruthi')]");
+
 
         //Click Change Password
-        [FindsBy(How = How.XPath, Using = "//a[contains(text(),'Change Password')]")]
-        private IWebElement ChangePassword { get; set; }
+        private IWebElement ChangePassword => _driver.FindElementByXPath("//a[contains(text(),'Change Password')]");
+
 
         // Click on current password 
-        [FindsBy(How = How.XPath, Using = "//input[@name='oldPassword']")]
-        private IWebElement CurrentPassword { get; set; }
+        private IWebElement CurrentPassword => _driver.FindElementByXPath("//input[@name='oldPassword']");
+
 
         // Click on New password 
-        [FindsBy(How = How.XPath, Using = "//input[@name='newPassword']")]
-        private IWebElement NewPassword { get; set; }
+        private IWebElement NewPassword => _driver.FindElementByXPath("//input[@name='newPassword']");
 
         // Click on Confirm password 
-        [FindsBy(How = How.XPath, Using = "//input[@name='confirmPassword']")]
-        private IWebElement ConfirmPassword { get; set; }
+        private IWebElement ConfirmPassword => _driver.FindElementByXPath("//input[@name='confirmPassword']");
+
 
         // Click on Change password save button
-        [FindsBy(How = How.XPath, Using = "//button[@type='button'][contains(.,'Save')]")]
-        private IWebElement ChangePasswordSave { get; set; }
+        private IWebElement ChangePasswordSave => _driver.FindElementByXPath("//button[@type='button'][contains(.,'Save')]");
+        
 
         internal void AddDescription()
         {
             try
             {
-                GlobalDefinitions.wait(5000);
+                Thread.Sleep(2000);
 
                 // Click on Description Icon 
                 Description.Click();
-
-                GlobalDefinitions.wait(9000);
+                GlobalDefinitions.wait(5000);
 
                 // Enter Description
-                EnterDescription.SendKeys("Hi this Sruthi");
+                EnterDescription.Clear();
+                EnterDescription.Clear();
+                EnterDescription.Clear();
+                EnterDescription.Clear();
+                EnterDescription.SendKeys("Hi Sruthi");
 
-                GlobalDefinitions.wait(5000);
+                GlobalDefinitions.wait(2000);
 
                 //Click on Save button
                 DescriptionSave.Click();
@@ -79,10 +88,16 @@ namespace MarsFramework.Pages
                 string ActualValue = GlobalDefinitions.driver.FindElement(By.XPath("//div[@class='ns-box-inner']")).Text;
 
                 // Assert Condition for adding description Confirmation message
-                Assert.AreEqual(ExpectedValue, ActualValue);
-
-                // Print in Console
-                Console.WriteLine("Passed - user added description successfully");
+                if (ExpectedValue == ActualValue)
+                {
+                    // Print in Console
+                    Console.WriteLine("Passed - user added description successfully");
+                }
+                else
+                {
+                    // Print in Console
+                    Console.WriteLine("Failed - user not added description");
+                }
 
                 //Write Log reports 
                 Base.test.Log(LogStatus.Info, "user added description successfully");
@@ -90,8 +105,6 @@ namespace MarsFramework.Pages
             }
             catch (Exception e)
             {
-                // Print in Console
-                Console.WriteLine("Failed - user not added description");
 
                 //take screen shot and save with given name
                 GlobalDefinitions.SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "user not added description");
@@ -109,34 +122,46 @@ namespace MarsFramework.Pages
         {
             try
             {
-                GlobalDefinitions.wait(2000);
+                Thread.Sleep(2000);
 
                 // Click on Description Icon 
                 Description.Click();
 
                 GlobalDefinitions.wait(9000);
 
-                //Clear Description Textbox
-                EnterDescription.Clear();
-
-
                 // Enter Description
-                EnterDescription.SendKeys("Hi this description is edited");
+                EnterDescription.Clear();
+                EnterDescription.Clear();
+                EnterDescription.Clear();
+                EnterDescription.Clear();
+                EnterDescription.SendKeys("Hi Sruthi");
 
-                GlobalDefinitions.wait(5000);
+                GlobalDefinitions.wait(2000);
 
                 //Click on Save button
                 DescriptionSave.Click();
 
+                GlobalDefinitions.wait(2000);
+
+                // Validate if user edited description successfully
                 // Validate if user added description successfully
                 string ExpectedValue = "Description has been saved successfully";
                 string ActualValue = GlobalDefinitions.driver.FindElement(By.XPath("//div[@class='ns-box-inner']")).Text;
 
-                // Assert Condition for adding description Confirmation message
-                Assert.AreEqual(ExpectedValue, ActualValue);
 
-                // Print in Console
-                Console.WriteLine("Passed - user edited description successfully");
+                // Assert Condition for adding description Confirmation message
+                if(ExpectedValue == ActualValue)
+                {
+                    // Print in Console
+                    Console.WriteLine("Passed - user edited description successfully");
+                }
+                else
+                {
+                    // Print in Console
+                    Console.WriteLine("Failed - user not edited description");
+                }
+
+                
 
                 //Write Log reports 
                 Base.test.Log(LogStatus.Info, "user edited description successfully");
@@ -144,8 +169,7 @@ namespace MarsFramework.Pages
             }
             catch (Exception e)
             {
-                // Print in Console
-                Console.WriteLine("Failed - user not edited description");
+                
 
                 //take screen shot and save with given name
                 GlobalDefinitions.SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "user not edited description");
@@ -164,7 +188,7 @@ namespace MarsFramework.Pages
             try
             {
                 //defining driver wait
-                GlobalDefinitions.wait(2000);
+                GlobalDefinitions.wait(5000);
 
                 // To mouse hover username/Hi Sruthi link using Actions & click change password
                // Actions action2 = new Actions(GlobalDefinitions.driver);

@@ -2,7 +2,9 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 using RelevantCodes.ExtentReports;
 using System;
 using System.Collections.Generic;
@@ -14,22 +16,30 @@ namespace MarsFramework.Pages
 {
     internal class ManageRequests
     {
-        public ManageRequests()
-        {
-            PageFactory.InitElements(GlobalDefinitions.driver, this);
-        }
+        private readonly RemoteWebDriver _driver;
 
-        //Click on Manage Requests link
-        [FindsBy(How = How.XPath, Using = "//div[@class='ui dropdown link item']")]
-        private IWebElement manageRequestsLink { get; set; }
+        //Creating a constructor
+        
+         public ManageRequests()
+         {
+             _driver = GlobalDefinitions.driver;
+         }
 
-        //Click on Received Requests 
-        [FindsBy(How = How.XPath, Using = "//a[contains(.,'Received Requests')]")]
-        private IWebElement receivedRequests { get; set; }
 
-        //Click on Sent Requests
-        [FindsBy(How = How.XPath, Using = "//a[contains(.,'Sent Requests')]")]
-        private IWebElement sentRequests { get; set; }
+         //Click on Manage Requests link
+         private IWebElement manageRequestsLink => _driver.FindElementByXPath("//div[@class='ui dropdown link item']");
+
+
+
+         //Click on Received Requests 
+         private IWebElement receivedRequests => _driver.FindElementByXPath("//a[@href='/Home/ReceivedRequest']");
+
+
+         //Click on Sent Requests
+         private IWebElement sentRequests => _driver.FindElementByXPath("//a[contains(.,'Sent Requests')]");
+
+       
+
 
         internal void Requests()
         {
@@ -45,7 +55,7 @@ namespace MarsFramework.Pages
             manageRequestsLink.Click();
 
             // Get current URL and store in a variable
-            String CurrentUrl = GlobalDefinitions.driver.Url;
+            String CurrentUrl =GlobalDefinitions. driver.Url;
 
             // Print the Current Url in console
             Console.WriteLine(CurrentUrl);
@@ -65,7 +75,7 @@ namespace MarsFramework.Pages
                 Console.WriteLine("Failed - Manage Requests link not taken user to Manage Requests page");
 
                 //take screen shot and save with given name
-                GlobalDefinitions.SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Not Navigated to Manage Requests page");
+                GlobalDefinitions.SaveScreenShotClass.SaveScreenshot(GlobalDefinitions. driver, "Not Navigated to Manage Requests page");
 
                 //Write Log reports 
                 Base.test.Log(LogStatus.Info, "Test Failed ");
@@ -83,18 +93,12 @@ namespace MarsFramework.Pages
         {
             try
             {
-                //defining driver wait
-                GlobalDefinitions.wait(2000);
-
                 // To mouse hover Manage Requests link using Actions
                 Actions action1 = new Actions(GlobalDefinitions.driver);
 
                 //Click on Received Requests
-                action1.MoveToElement(manageRequestsLink).MoveToElement(receivedRequests).Click().Build().Perform();
-
-                //defining driver wait
-                GlobalDefinitions.wait(2000);
-                
+                action1.MoveToElement(manageRequestsLink).MoveToElement(receivedRequests).Click().Perform();
+               
                 // Get current URL and store in a variable
                 String ReceivedRequestCurrentUrl = GlobalDefinitions.driver.Url;
 

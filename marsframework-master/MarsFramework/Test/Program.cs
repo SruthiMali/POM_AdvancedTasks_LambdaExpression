@@ -2,6 +2,8 @@
 using MarsFramework.Pages;
 using NUnit.Framework;
 
+
+
 namespace MarsFramework
 {
     public class Program
@@ -67,11 +69,9 @@ namespace MarsFramework
                 //Create a Class & an Object to call the ManageListings method
                 ManageListings ML = new ManageListings();
 
-                SK.ClickOnShareSkillButton();
                 ML.ClickOnmanageListingsLink();
-                //ML.ClickView();
-                ML.Clickedit();
                 ML.Clickdelete();
+                ML.Clickedit();
 
             }
 
